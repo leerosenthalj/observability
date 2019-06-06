@@ -8,21 +8,21 @@ import pdb
 import observability.utils as utils
 
 '''Outline:
-makeplot
+makeplot !
     Put together all of the functions listed below.
-drawplot
+drawplot !
     Takes dates/times/visibility-map, returns a figure.
-observable
+observable !
     Make map of observability.
-numeric
+numeric !
     Test whether input is numeric.
-target
+setup_object !
     set up target location in proper units.
-observatory
+setup_observatory !
     Set up PyEphem 'observer object'. Hardcode a bunch of options.
-hms
+hms (put in utils)
     Convert between hour/minute/second and decimal degree.
-dms
+dms (put in utils)
     Convert between degree/minute/second and decimal degree.
 '''
 Class Visibility(object):
@@ -43,10 +43,12 @@ Class Visibility(object):
         dt (float): Fontsize
 
     """
-    def init(obs, ra, dec, minElev=30, twilight=12, oversamp=16, dt=0, fs=16):
+    def init(obs, ra, dec, name=None, minElev=30, twilight=12,
+             oversamp=16, dt=0, fs=16):
         self.obs = obs
         self.ra = ra
         self.dec = dec
+        self.name = name
         self.minElev = minElev
         self.twilight = twilight
         self.oversamp=oversamp
@@ -54,6 +56,9 @@ Class Visibility(object):
         self.fs = fs
 
     def setup_observatory(self):
+        """Method to generate an ephem.Observer object, with hardcoded options.
+
+        """
         #If an ephem.Observer object has been passed, use that.
         if isinstance(self.obs, ephem.Observer):
             observer = obs
@@ -115,10 +120,23 @@ Class Visibility(object):
                 observer.long, observer.lat = '-31:16:24', '+149:04:16'
                 observer.elevation = 1116
 
-        self.observer = observer
+        #self.observer = observer
+        return observer
 
     def setup_object(self):
+        """Method to generate an ephem.star object from the target coordinates.
 
+        """
+        object = ephem.star('Rigel')
+        if self.name is not None:
+            object.name = self.name
+        ra = utils.hms(self.ra)
+        dec = utils.dms(self.dec)
+
+        object._ra, object._dec = ra, dec
+
+        #self.object = object
+        return object
 
     def observable(self, dates, object):
         """Return Boolean map of object visibility at given observatory & time.
