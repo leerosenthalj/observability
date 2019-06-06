@@ -53,6 +53,73 @@ Class Visibility(object):
         self.dt = dt
         self.fs = fs
 
+    def setup_observatory(self):
+        #If an ephem.Observer object has been passed, use that.
+        if isinstance(self.obs, ephem.Observer):
+            observer = obs
+        #If it is an observatory name, set up the appropriate Observer object.
+        else:
+            observer = ephem.Observer()
+            if obs == 'keck':
+                observer.long, observer.lat = '-155:28.7','19:49.7'
+                observer.elevation = 4160
+            elif obs == 'lick':
+                observer.long, observer.lat = '-121:38.2','37:20.6'
+                observer.elevation = 1290
+            elif obs=='palomar':
+                observer.long, observer.lat = '-116:51:50', '33:21:21'
+                observer.elevation = 1712
+            elif obs == 'flwo':
+                observer.long, observer.lat = '-110:52.7', '31:40.8'
+                observer.elevation = 2606
+            elif obs == 'lapalma':
+                observer.long, observer.lat = '-17:53.6','28:45.5'
+                observer.elevation = 2396
+            elif obs == 'ctio':
+                observer.long, observer.lat = '-70:48:54','-30:9.92'
+                observer.elevation = 2215
+            elif obs == 'dct' or obs == 'happyjack':
+                observer.long, observer.lat = '-111:25:20', '34:44:40'
+                observer.elevation = 2360
+            elif obs == 'andersonmesa':
+                observer.long, observer.lat = '-111:32:09', '30:05:49'
+                observer.elevation = 2163
+            elif obs == 'mtbigelow' or obs == 'catalina':
+                observer.long, observer.lat = '-110:44:04.3', '32:24:59.3'
+                observer.elevation = 2518
+            elif obs == 'mtgraham':
+                observer.long, observer.lat = '-109:53:23', '32:42:05'
+                observer.elevation = 3221
+            elif obs == 'kpno':
+                observer.long, observer.lat = '-111:25:48', '31:57:30'
+                observer.elevation = 2096
+            elif obs == 'cerropachon':
+                observer.long, observer.lat = '-70:44:11.7', '-30:14:26.6'
+                observer.elevation = 2722
+            elif obs == 'lasilla':
+                observer.long, observer.lat = '-70:43:53', '-29:15:40'
+                observer.elevation = 2400
+            elif obs == 'cerroparanal':
+                observer.long, observer.lat = '-70:24:15', '-24:37:38'
+                observer.elevation = 2635
+            elif obs == 'calaralto':
+                observer.long, observer.lat = '-02:32:46', '+37:13:25'
+                observer.elevation = 2168
+            elif obs == 'lascampanas':
+                observer.long, observer.lat = '-70:41:33', '-29:00:53'
+                observer.elevation = 2380
+            elif obs == 'saao':
+                observer.long, observer.lat = '-32:22:42', '+20:48:38'
+                observer.elevation = 1798
+            elif obs == 'sidingspring':
+                observer.long, observer.lat = '-31:16:24', '+149:04:16'
+                observer.elevation = 1116
+
+        self.observer = observer
+
+    def setup_object(self):
+
+
     def observable(self, dates, object):
         """Return Boolean map of object visibility at given observatory & time.
 
