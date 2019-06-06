@@ -5,6 +5,8 @@ import pylab as py
 import matplotlib.dates as mdates
 import pdb
 
+import observability.utils as utils
+
 '''Outline:
 makeplot
     Put together all of the functions listed below.
@@ -23,7 +25,7 @@ hms
 dms
     Convert between degree/minute/second and decimal degree.
 '''
-Class Observability(object):
+Class Visibility(object):
     """Class to make observability plot for a given target and observatory.
 
     Args:
@@ -84,7 +86,7 @@ Class Observability(object):
         #Make visibility boolean map.
         vis = ((-sunalts >= (self.twilight*np.pi/180.)) *
                (alts >= (self.minElev*np.pi/180.))).reshape(dateshape)
-               
+
         return vis
 
     def drawplot(self, dates, hrs, observability):
