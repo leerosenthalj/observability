@@ -25,7 +25,7 @@ hms (put in utils)
 dms (put in utils)
     Convert between degree/minute/second and decimal degree.
 '''
-Class Visibility(object):
+class Visibility(object):
     """Class to make observability plot for a given target and observatory.
 
     Args:
